@@ -30,7 +30,7 @@ def diy_encrypt_ecb(data, key, block_size):
     return bytes(encrypted_data)
 
 
-# ECBモード復号化
+# ECBモード復号
 def diy_decrypt_ecb(data, key, block_size):
     decrypted_data = bytearray()
     for i in range(0, len(data), block_size):
@@ -54,7 +54,7 @@ def diy_encrypt_cbc(data, key, block_size, iv):
     return bytes(encrypted_data)
 
 
-# CBCモード復号化
+# CBCモード復号
 def diy_decrypt_cbc(data, key, block_size, iv):
     decrypted_data = bytearray()
     previous_block = iv
@@ -74,7 +74,7 @@ def lib_encrypt_image(data, key, mode, iv=None):
     return encryptor.update(data) + encryptor.finalize()
 
 
-# ライブラリベースの復号化関数
+# ライブラリベースの復号関数
 def lib_decrypt_image(data, key, mode, iv=None):
     cipher = Cipher(algorithms.AES(key), mode)
     decryptor = cipher.decryptor()
@@ -93,7 +93,7 @@ def process_image(input_image_path, output_ecb_encrypted, output_cbc_encrypted,
     padder = padding.PKCS7(block_size * 8).padder()
     padded_data = padder.update(flat_data) + padder.finalize()
 
-    # 暗号化・復号化の実行
+    # 暗号化・復号の実行
     if use_diy:
         # 自作関数を使用
         encrypted_ecb = diy_encrypt_ecb(padded_data, key, block_size)
